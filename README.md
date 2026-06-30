@@ -1,136 +1,228 @@
-# Nexora
+# 🚀 Nexora
 
-Nexora is a vibrant space where people from diverse backgrounds and interests come together to engage in meaningful conversations, fostering an environment rich in idea exchange, knowledge sharing, and diverse experiences.
+Nexora is a full-stack MERN-based productivity and collaboration platform that enables users to manage tasks, create posts, showcase products, and interact through a secure authentication system. Built with scalability and modern web development practices in mind, Nexora provides separate user and admin experiences with powerful management and analytics capabilities.
 
-# Preview
+---
 
-<img src="/preview.png">
-<a href="https://nexora.vercel.app" target="_blank">Live Preview</a> | <a href="https://nexora-server.vercel.app" target="_blank">Live API</a> | <a href="https://documenter.getpostman.com/view/27027258/2sA3dxEXJh" target="_blank">Postman</a>
+# 📸 Preview
 
-# Requirements
+<p align="center">
+    <img src="./assets/home.png" alt="Nexora Home" width="100%">
+</p>
 
-[Install Node On Your Device](https://nodejs.org/)
+### 👤 User Dashboard
 
-# How to Run
+<p align="center">
+    <img src="./assets/dashboard.png" alt="User Dashboard" width="100%">
+</p>
+
+### 📊 Admin Analytics Dashboard
+
+<p align="center">
+    <img src="./assets/dashboard2.png" alt="Admin Dashboard" width="100%">
+</p>
+
+# ✨ Features
+
+## 👤 User Features
+
+- Secure Authentication (JWT)
+- User Registration & Login
+- Profile Management
+- Create, Edit & Delete Posts
+- Product Management
+- Task Management
+- Password Change
+- Responsive Dashboard
+- Activity Tracking
+
+---
+
+## 🛡️ Admin Panel
+
+Nexora includes a dedicated Admin Dashboard for monitoring platform activity and managing users.
+
+### Admin Features
+
+- 📊 Analytics Dashboard
+- 👥 User Management
+- 📈 Last Month User Activity Graph
+- 📉 Role-Based User Distribution
+- 📦 Product Statistics
+- 📝 Post Statistics
+- 📋 Task Statistics
+- 🔍 Platform Overview
+- Secure Admin Authentication
+
+The analytics module uses MongoDB aggregation pipelines to generate real-time insights for administrators.
+
+---
+
+# 🛠 Tech Stack
+
+## Frontend
+
+- React
+- Vite
+- JavaScript
+- Tailwind CSS
+- React Router
+- Axios
+
+## Backend
+
+- Node.js
+- Express.js
+
+## Database
+
+- MongoDB
+- Mongoose
+
+## Authentication
+
+- JWT
+- Cookies
+
+## Other Tools
+
+- Cloudinary
+- Git
+- GitHub
+- Vercel
+
+---
+
+# 📂 Project Structure
 
 ```
-git clone https://github.com/masum184e/nexora.git
+Nexora
+│
+├── client
+│   ├── components
+│   ├── pages
+│   ├── layouts
+│   ├── hooks
+│   └── src
+│
+├── server
+│   ├── controller
+│   ├── controllers
+│   ├── middleware
+│   ├── models
+│   ├── routes
+│   └── config
+│
+├── assets
+└── README.md
+```
 
-# BACKEND
-cd server
+---
+
+# ⚙️ Installation
+
+## Clone Repository
+
+```bash
+git clone https://github.com/Subhrajit567/Nexora.git
+```
+
+## Install Backend
+
+```bash
+cd Nexora/server
 npm install
-npx nodemon index.js
+npm run dev
+```
 
-# FRONTEND
+## Install Frontend
+
+```bash
 cd ../client
 npm install
 npm run dev
 ```
 
-# Environment Variables
+---
 
-## Frontend
+# 🔑 Environment Variables
 
-```
-VITE_SERVER_ENDPOINT = https://nexora-server.vercel.app:3000/api
-VITE_TOKEN_KEY = nexora
-VITE_USER_ROLE = role
-VITE_COOKIE_EXPIRES = 1
-```
+## Frontend (.env)
 
-## Backend
-
-```
-PORT = 3000
-DATABASE_URL = mongodb://localhost:27017/
-DATABASE_NAME = nexora
-BCRYPT_GEN_SALT_NUMBER = 10
-JWT_SECRET_KEY = abcdefghijklmnopqrstuvwxyz
-COOKIE_EXPIRES = 5d
-COOKIE_KEY = nexora
-UPLOAD_DIRECTORY = uploads
+```env
+VITE_SERVER_ENDPOINT=http://localhost:3000/api
+VITE_TOKEN_KEY=nexora
+VITE_USER_ROLE=role
+VITE_COOKIE_EXPIRES=1
 ```
 
-# Features
+## Backend (.env)
 
-## Admin
+```env
+PORT=3000
+DATABASE_URL=your_mongodb_connection_string
+JWT_SECRET_KEY=your_secret_key
+COOKIE_KEY=nexora
+COOKIE_EXPIRES=5d
 
-- Profile
-  - Last Month User Activity
-  - Role Based User Distribution
-- Users Management
-- Sign Out
-
-## Student
-
-- Profile
-- Add Post
-- My Posts
-- Add Product
-- My Products
-- Task Manager
-- Setting
-  - Change Password
-- Sign Out
-
-# Contribution Ideas
-
-- Continue with Google signup/signin
-- Single Product Sell Page
-- View Task Details
-- View User Details(public)
-- Edit user, post, product
-- Loading View
-
-## Institution/Teacher
-
-- post(text, image)
-  - by admin/institution
-  - by teacher
-- assignments
-- poll
-- resource sharing
-- test
-
-### Design Idea
-
-```
-|----------------------------------------------------------------
-|                 |                                |  Analytics |
-|-----------------|                                |------------|
-|                 |          ----------            |  Teachers  |
-|-----------------|          | Create |            |  Students  |
-|   Institution   |          ----------            |  Courses   |
-|-----------------|                                |    Posts   |
-|                 |                                |    ....    |
-|-----------------|--------------------------------|------------|
+CLOUDINARY_NAME=your_cloudinary_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_SECRET=your_api_secret
 ```
 
-### Assignments
+---
 
-- title
-- description
-- subject
-- deadline
-- total marks
-- status
-- audience
+# 📊 Analytics Module
 
-### Polls
+The Admin Dashboard provides real-time analytics using MongoDB aggregation pipelines.
 
-- title
-- description
-- type(singl, multiple)
-- options
-- deadline
-- status
-- anonymous member
-- audience
+It includes:
 
-### Resource
+- Monthly User Registrations
+- Role Distribution
+- Product Statistics
+- Post Statistics
+- Task Completion Statistics
+- Overall Platform Summary
 
-- title
-- description
-- visibility
-- url
-- audience
+These insights help administrators monitor application usage and user engagement effectively.
+
+---
+
+# 🚀 Future Enhancements
+
+- Google OAuth Authentication
+- Real-time Notifications
+- Team Collaboration
+- Live Chat
+- AI-powered Task Suggestions
+- Calendar Integration
+- Dark Mode
+- Email Verification
+- Mobile App
+
+---
+
+# 🤝 Contributing
+
+Contributions are welcome!
+
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push the branch
+5. Open a Pull Request
+
+---
+
+# 👨‍💻 Author
+
+**Subhrajit Sahoo**
+
+- GitHub: https://github.com/Subhrajit567
+
+---
+
+# ⭐ Support
+
+If you found this project useful, please consider giving it a ⭐ on GitHub.
