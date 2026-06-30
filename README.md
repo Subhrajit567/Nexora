@@ -13,13 +13,13 @@ Nexora is a full-stack MERN-based productivity and collaboration platform that e
 ### 👤 User Dashboard
 
 <p align="center">
-    <img src="./assets/dashboard.png" alt="User Dashboard" width="100%">
+    <img src="./assets/dashboard.PNG" alt="User Dashboard" width="100%">
 </p>
 
 ### 📊 Admin Analytics Dashboard
 
 <p align="center">
-    <img src="./assets/dashboard2.png" alt="Admin Dashboard" width="100%">
+    <img src="./assets/dashboard2.PNG" alt="Admin Dashboard" width="100%">
 </p>
 
 # ✨ Features
@@ -67,7 +67,6 @@ The analytics module uses MongoDB aggregation pipelines to generate real-time in
 - JavaScript
 - Tailwind CSS
 - React Router
-- Axios
 
 ## Backend
 
@@ -86,11 +85,8 @@ The analytics module uses MongoDB aggregation pipelines to generate real-time in
 
 ## Other Tools
 
-- Cloudinary
 - Git
 - GitHub
-- Vercel
-
 ---
 
 # 📂 Project Structure
@@ -100,9 +96,8 @@ Nexora
 │
 ├── client
 │   ├── components
-│   ├── pages
-│   ├── layouts
-│   ├── hooks
+│   ├── provider
+│   ├── public
 │   └── src
 │
 ├── server
@@ -132,7 +127,7 @@ git clone https://github.com/Subhrajit567/Nexora.git
 ```bash
 cd Nexora/server
 npm install
-npm run dev
+npx nodemon index.js
 ```
 
 ## Install Frontend
@@ -161,13 +156,11 @@ VITE_COOKIE_EXPIRES=1
 ```env
 PORT=3000
 DATABASE_URL=your_mongodb_connection_string
+DATABASE_NAME = nexora
 JWT_SECRET_KEY=your_secret_key
 COOKIE_KEY=nexora
 COOKIE_EXPIRES=5d
 
-CLOUDINARY_NAME=your_cloudinary_name
-CLOUDINARY_API_KEY=your_api_key
-CLOUDINARY_SECRET=your_api_secret
 ```
 
 ---
