@@ -20,10 +20,12 @@ app.use(
         origin: [
             "http://localhost:5173",
             "https://nexora.vercel.app",
+            "https://nexora-frotend.onrender.com"
         ],
         credentials: true,
     })
 );
+
 databaseConnection(DATABASE_URL, DATABASE_NAME);
 app.use(express.json());
 app.use(cookieParser());
