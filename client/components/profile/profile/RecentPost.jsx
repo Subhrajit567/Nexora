@@ -55,7 +55,7 @@ const RecentPost = () => {
     };
     fetchData();
   }, []);
-  
+
   return (
     <Card>
       <CardContent>

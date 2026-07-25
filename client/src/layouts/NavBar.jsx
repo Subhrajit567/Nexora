@@ -4,7 +4,7 @@ import Cookies from 'js-cookie'
 import AlertBox from '../../components/common/AlertBox';
 
 export default function NavBar() {
-    const cookie = Cookies.get(import.meta.env.VITE_COOKIE_KEY)
+    const cookie = Cookies.get(import.meta.env.VITE_TOKEN_KEY)
     return (
         <Box>
             <AppBar position="static" sx={{ backgroundColor: "transparent", borderBottom: "1px solid #59e3a7", padding: "5px 0" }} elevation={0} >
