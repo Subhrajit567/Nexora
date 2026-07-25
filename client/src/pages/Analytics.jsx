@@ -1,13 +1,14 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { 
-  Box, 
-  Grid, 
-  Card, 
-  CardContent, 
-  Typography, 
-  CircularProgress, 
+const API = import.meta.env.VITE_SERVER_ENDPOINT;
+import {
+  Box,
+  Grid,
+  Card,
+  CardContent,
+  Typography,
+  CircularProgress,
   Alert,
   Paper,
   Button,
@@ -27,10 +28,10 @@ import {
   ListItemText,
   ListItemIcon
 } from '@mui/material';
-import { 
-  Download as DownloadIcon, 
-  Assignment as AssignmentIcon, 
-  Person as PersonIcon 
+import {
+  Download as DownloadIcon,
+  Assignment as AssignmentIcon,
+  Person as PersonIcon
 } from '@mui/icons-material';
 import {
   PieChart, Pie, Cell,
@@ -56,7 +57,7 @@ const Analytics = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [filter, setFilter] = useState('all');
-  
+
   const [overview, setOverview] = useState(null);
   const [statusData, setStatusData] = useState([]);
   const [monthlyData, setMonthlyData] = useState([]);
@@ -73,7 +74,7 @@ const Analytics = () => {
   const getFilterDates = useCallback(() => {
     const end = new Date();
     let start = new Date();
-    
+
     if (filter === '7days') {
       start.setDate(start.getDate() - 7);
     } else if (filter === '30days') {
@@ -83,7 +84,7 @@ const Analytics = () => {
     } else {
       return ''; // all time
     }
-    
+
     return `?startDate=${start.toISOString()}&endDate=${end.toISOString()}`;
   }, [filter]);
 
@@ -93,16 +94,16 @@ const Analytics = () => {
         setLoading(true);
         const query = getFilterDates();
         const [overviewRes, statusRes, monthlyRes, priorityRes, leaderboardRes, timelineRes] = await Promise.all([
-          axios.get(`http://localhost:3000/api/analytics/overview${query}`),
-          axios.get(`http://localhost:3000/api/analytics/status${query}`),
-          axios.get(`http://localhost:3000/api/analytics/monthly${query}`),
-          axios.get(`http://localhost:3000/api/analytics/priority${query}`),
-          axios.get(`http://localhost:3000/api/analytics/leaderboard${query}`),
-          axios.get(`http://localhost:3000/api/analytics/timeline${query}`)
+          axios.get(`${API}/api/analytics/overview${query}`),
+          axios.get(`${API}/api/analytics/status${query}`),
+          axios.get(`${API}/api/analytics/monthly${query}`),
+          axios.get(`${API}/api/analytics/priority${query}`),
+          axios.get(`${API}/api/analytics/leaderboard${query}`),
+          axios.get(`${API}/api/analytics/timeline${query}`)
         ]);
 
         setOverview(overviewRes.data.data);
-        
+
         const formattedStatus = statusRes.data.data.map(s => ({
           name: s.status.charAt(0).toUpperCase() + s.status.slice(1),
           value: s.count
@@ -173,9 +174,9 @@ const Analytics = () => {
               <MenuItem value="year">This Year</MenuItem>
             </Select>
           </FormControl>
-          <Button 
-            variant="contained" 
-            startIcon={<DownloadIcon />} 
+          <Button
+            variant="contained"
+            startIcon={<DownloadIcon />}
             onClick={handlePrint}
             sx={{ backgroundColor: COLORS.primary, '&:hover': { backgroundColor: '#142226' } }}
           >
@@ -186,7 +187,7 @@ const Analytics = () => {
 
       {/* Printable Area */}
       <div ref={componentRef} style={{ padding: '20px', backgroundColor: COLORS.background }}>
-        
+
         {/* KPI Cards Section */}
         <Grid container spacing={3} mb={4}>
           <Grid item xs={12} sm={6} md={3}>
@@ -216,8 +217,8 @@ const Analytics = () => {
                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e0e0e0" />
                     <XAxis dataKey="name" axisLine={false} tickLine={false} />
                     <YAxis axisLine={false} tickLine={false} />
-                    <RechartsTooltip 
-                      contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} 
+                    <RechartsTooltip
+                      contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
                     />
                     <Legend iconType="circle" />
                     <Line type="monotone" dataKey="Users" stroke={COLORS.primary} strokeWidth={3} dot={{ r: 4 }} activeDot={{ r: 6 }} />
@@ -248,8 +249,8 @@ const Analytics = () => {
                         <Cell key={`cell-${index}`} fill={COLORS.charts[index % COLORS.charts.length]} />
                       ))}
                     </Pie>
-                    <RechartsTooltip 
-                      contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} 
+                    <RechartsTooltip
+                      contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
                     />
                     <Legend iconType="circle" verticalAlign="bottom" />
                   </PieChart>
@@ -322,8 +323,8 @@ const Analytics = () => {
                   <Box key={index}>
                     <ListItem alignItems="flex-start" sx={{ px: 0 }}>
                       <ListItemIcon sx={{ minWidth: 40 }}>
-                        {event.type === 'task' ? 
-                          <AssignmentIcon sx={{ color: COLORS.accent }} /> : 
+                        {event.type === 'task' ?
+                          <AssignmentIcon sx={{ color: COLORS.accent }} /> :
                           <PersonIcon sx={{ color: COLORS.primary }} />
                         }
                       </ListItemIcon>
@@ -355,9 +356,9 @@ const Analytics = () => {
                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e0e0e0" />
                     <XAxis dataKey="name" axisLine={false} tickLine={false} />
                     <YAxis axisLine={false} tickLine={false} />
-                    <RechartsTooltip 
+                    <RechartsTooltip
                       cursor={{ fill: 'transparent' }}
-                      contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} 
+                      contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
                     />
                     <Legend iconType="circle" />
                     <Bar dataKey="Count" fill={COLORS.primary} radius={[4, 4, 0, 0]} />
@@ -367,7 +368,7 @@ const Analytics = () => {
             </Paper>
           </Grid>
         </Grid>
-        
+
       </div>
     </Box>
   );
@@ -375,8 +376,8 @@ const Analytics = () => {
 
 // Reusable KPI Card Component
 const KPICard = ({ title, value }) => (
-  <Card sx={{ 
-    borderRadius: 3, 
+  <Card sx={{
+    borderRadius: 3,
     boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
     borderLeft: `4px solid ${COLORS.accent}`,
     transition: 'transform 0.2s',
