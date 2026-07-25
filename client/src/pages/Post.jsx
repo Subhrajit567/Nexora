@@ -24,7 +24,7 @@ import {
 } from "@mui/material";
 import useNexora from "../hooks/useNexora";
 import { useEffect, useRef, useState } from "react";
-import axios from "axios";
+import api from "../api/axiosInstance";
 import Cookies from "js-cookie";
 
 import {
@@ -61,9 +61,7 @@ const Post = () => {
     const fetchData = async () => {
       setLoadingStatus(true);
       try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_SERVER_ENDPOINT}/posts/${postId}`
-        );
+        const response = await api.get(`/posts/${postId}`);
         if (response.data.status) {
           setPost(response.data.post);
         } else {
@@ -93,11 +91,9 @@ const Post = () => {
       const fetchData = async () => {
         setLoadingStatus(true);
         try {
-          const response = await axios.post(
-            `${import.meta.env.VITE_SERVER_ENDPOINT}/posts/${postId}/comment`,
-            {
-              comment: commentText,
-            },
+          const response = await api.post(
+            `/posts/${postId}/comment`,
+            { comment: commentText },
             {
               headers: {
                 Authorization: `Bearer ${Cookies.get(
@@ -156,11 +152,9 @@ const Post = () => {
       const fetchData = async () => {
         setLoadingStatus(true);
         try {
-          const response = await axios.post(
-            `${import.meta.env.VITE_SERVER_ENDPOINT}/posts/${postId}/reaction`,
-            {
-              reactionType: reactionType,
-            },
+          const response = await api.post(
+            `/posts/${postId}/reaction`,
+            { reactionType: reactionType },
             {
               headers: {
                 Authorization: `Bearer ${Cookies.get(

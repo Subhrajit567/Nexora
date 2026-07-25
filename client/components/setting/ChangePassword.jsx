@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import useNexora from "../../src/hooks/useNexora";
-import axios from "axios";
+import api from "../../src/api/axiosInstance";
 import Cookies from "js-cookie";
 
 const ChangePassword = () => {
@@ -35,8 +35,8 @@ const ChangePassword = () => {
   const onSubmit = async (data) => {
     try {
       setLoadingStatus(true);
-      const response = await axios.put(
-        `${import.meta.env.VITE_SERVER_ENDPOINT}/users/change-password`,
+      const response = await api.put(
+        "/users/change-password",
         data,
         {
           headers: {

@@ -10,7 +10,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../../api/axiosInstance";
 import Cookies from "js-cookie";
 import useNexora from "../../hooks/useNexora";
 
@@ -27,16 +27,13 @@ const Users = () => {
   const handleDelete = async (userId) => {
     try {
       setLoadingStatus(true);
-      const response = await axios.delete(
-        `${import.meta.env.VITE_SERVER_ENDPOINT}/users/${userId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${Cookies.get(
-              import.meta.env.VITE_TOKEN_KEY
-            )}`,
-          },
-        }
-      );
+      const response = await api.delete(`/users/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${Cookies.get(
+            import.meta.env.VITE_TOKEN_KEY
+          )}`,
+        },
+      });
       if (response.data.status) {
         setData((prevData) => prevData.filter((item) => item._id !== userId));
         setAlertBoxOpenStatus(true);
@@ -60,17 +57,14 @@ const Users = () => {
     const fetchData = async () => {
       try {
         setLoadingStatus(true);
-        const response = await axios.get(
-          `${import.meta.env.VITE_SERVER_ENDPOINT}/users`,
-          {
-            headers: {
-              Authorization: `Bearer ${Cookies.get(
-                import.meta.env.VITE_TOKEN_KEY
-              )}`,
-            },
-            params: { query: search.trim() },
-          }
-        );
+        const response = await api.get("/users", {
+          headers: {
+            Authorization: `Bearer ${Cookies.get(
+              import.meta.env.VITE_TOKEN_KEY
+            )}`,
+          },
+          params: { query: search.trim() },
+        });
         if (response.data.status) {
           setData(response.data.users);
         } else {

@@ -5,7 +5,7 @@ import Task from "../../components/profile/task-management/Task";
 import AddIcon from "@mui/icons-material/Add";
 import AddTask from "../../components/profile/task-management/AddTask";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../api/axiosInstance";
 import useNexora from "../hooks/useNexora";
 import dayjs from "dayjs";
 import { useForm, FormProvider } from "react-hook-form";
@@ -33,16 +33,13 @@ const TaskManager = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_SERVER_ENDPOINT}/tasks`,
-          {
-            headers: {
-              Authorization: `Bearer ${Cookies.get(
-                import.meta.env.VITE_TOKEN_KEY
-              )}`,
-            },
-          }
-        );
+        const response = await api.get("/tasks", {
+          headers: {
+            Authorization: `Bearer ${Cookies.get(
+              import.meta.env.VITE_TOKEN_KEY
+            )}`,
+          },
+        });
         if (response.data.status) {
           setAllTask(response.data.tasks);
         } else {
@@ -62,8 +59,8 @@ const TaskManager = () => {
   const onSubmit = async (data) => {
     try {
       setLoadingStatus(true);
-      const response = await axios.post(
-        `${import.meta.env.VITE_SERVER_ENDPOINT}/tasks`,
+      const response = await api.post(
+        "/tasks",
         { ...data, selectedDate },
         {
           headers: {
@@ -104,8 +101,8 @@ const TaskManager = () => {
   const handleDrop = async (taskId, status) => {
     try {
       setLoadingStatus(true);
-      const response = await axios.patch(
-        `${import.meta.env.VITE_SERVER_ENDPOINT}/tasks/${taskId}/${status}`,
+      const response = await api.patch(
+        `/tasks/${taskId}/${status}`,
         {},
         {
           headers: {
@@ -139,16 +136,13 @@ const TaskManager = () => {
   const handleDelete = async (taskId) => {
     try {
       setLoadingStatus(true);
-      const response = await axios.delete(
-        `${import.meta.env.VITE_SERVER_ENDPOINT}/tasks/${taskId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${Cookies.get(
-              import.meta.env.VITE_TOKEN_KEY
-            )}`,
-          },
-        }
-      );
+      const response = await api.delete(`/tasks/${taskId}`, {
+        headers: {
+          Authorization: `Bearer ${Cookies.get(
+            import.meta.env.VITE_TOKEN_KEY
+          )}`,
+        },
+      });
       if (response.data.status) {
         setAllTask(allTask.filter((item) => item._id !== taskId));
         setAlertBoxOpenStatus(true);

@@ -1,6 +1,6 @@
 import { Container, Grid, Card } from "@mui/material";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../../../src/api/axiosInstance";
 import Cookies from "js-cookie";
 import useNexora from "../../../src/hooks/useNexora";
 
@@ -47,16 +47,13 @@ const ActivityGrid = () => {
     const fetchData = async () => {
       setLoadingStatus(true);
       try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_SERVER_ENDPOINT}/users/activity`,
-          {
-            headers: {
-              Authorization: `Bearer ${Cookies.get(
-                import.meta.env.VITE_TOKEN_KEY
-              )}`,
-            },
-          }
-        );
+        const response = await api.get("/users/activity", {
+          headers: {
+            Authorization: `Bearer ${Cookies.get(
+              import.meta.env.VITE_TOKEN_KEY
+            )}`,
+          },
+        });
         if (response.data.status) {
           const formattedData = response.data.userActivity.map((entry) => ({
             date: new Date(entry.date),

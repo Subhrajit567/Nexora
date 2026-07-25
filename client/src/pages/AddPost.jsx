@@ -14,7 +14,7 @@ import { marked } from "marked";
 import DOMPurify from "dompurify";
 import "easymde/dist/easymde.min.css";
 import useNexora from "../hooks/useNexora";
-import axios from "axios";
+import api from "../api/axiosInstance";
 import Cookies from "js-cookie";
 
 const AddPost = () => {
@@ -78,13 +78,9 @@ const AddPost = () => {
 
     try {
       setLoadingStatus(true);
-      const response = await axios.post(
-        `${import.meta.env.VITE_SERVER_ENDPOINT}/posts`,
-        {
-          title: data.title,
-          tags,
-          description: trimmedDescription,
-        },
+      const response = await api.post(
+        "/posts",
+        { title: data.title, tags, description: trimmedDescription },
         {
           headers: {
             Authorization: `Bearer ${Cookies.get(import.meta.env.VITE_TOKEN_KEY)}`,

@@ -8,7 +8,7 @@ import {
   Divider,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../../../src/api/axiosInstance";
 import Cookies from "js-cookie";
 import useNexora from "../../../src/hooks/useNexora";
 
@@ -25,18 +25,13 @@ const RecentPost = () => {
     const fetchData = async () => {
       setLoadingStatus(true);
       try {
-        const response = await axios.get(
-          `${
-            import.meta.env.VITE_SERVER_ENDPOINT
-          }/posts?limit=5&sort=createdAt`,
-          {
-            headers: {
-              Authorization: `Bearer ${Cookies.get(
-                import.meta.env.VITE_TOKEN_KEY
-              )}`,
-            },
-          }
-        );
+        const response = await api.get("/posts?limit=5&sort=createdAt", {
+          headers: {
+            Authorization: `Bearer ${Cookies.get(
+              import.meta.env.VITE_TOKEN_KEY
+            )}`,
+          },
+        });
         if (response.data.status) {
           setPosts(response.data.posts);
         } else {

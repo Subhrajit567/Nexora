@@ -8,7 +8,7 @@ import {
   Line,
   LineChart,
 } from "recharts";
-import axios from "axios";
+import api from "../../src/api/axiosInstance";
 import Cookies from "js-cookie";
 import { Typography } from "@mui/material";
 import useNexora from "../../src/hooks/useNexora";
@@ -24,18 +24,13 @@ const LastMonthActivity = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          `${
-            import.meta.env.VITE_SERVER_ENDPOINT
-          }/admin/users/last-month-count`,
-          {
-            headers: {
-              Authorization: `Bearer ${Cookies.get(
-                import.meta.env.VITE_TOKEN_KEY
-              )}`,
-            },
-          }
-        );
+        const response = await api.get("/admin/users/last-month-count", {
+          headers: {
+            Authorization: `Bearer ${Cookies.get(
+              import.meta.env.VITE_TOKEN_KEY
+            )}`,
+          },
+        });
         if (response.data.status) {
           setCountData(response.data.userCount);
         } else {

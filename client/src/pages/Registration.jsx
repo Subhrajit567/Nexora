@@ -4,7 +4,7 @@ import GoogleIcon from "@mui/icons-material/Google";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import axios from "axios";
+import api from "../api/axiosInstance";
 import { useEffect } from "react";
 import Cookies from "js-cookie";
 import useNexora from "../hooks/useNexora";
@@ -44,10 +44,7 @@ const Registration = () => {
   // form submit — registration always creates role="user", so always redirect to /profile
   const onSubmit = async (data) => {
     try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_SERVER_ENDPOINT}/users/registration`,
-        data
-      );
+      const response = await api.post("/users/registration", data);
       if (response.data.status) {
         // Store token and role in cookies
         Cookies.set(import.meta.env.VITE_TOKEN_KEY, response.data.token, {

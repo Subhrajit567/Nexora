@@ -1,7 +1,7 @@
 import { Box, Button, TextField, IconButton, Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useFormContext } from "react-hook-form";
-import axios from "axios";
+import api from "../../../src/api/axiosInstance";
 import useNexora from "../../../src/hooks/useNexora";
 import Cookies from 'js-cookie'
 
@@ -31,8 +31,8 @@ const AddProductForm = () => {
 
     try{
       setLoadingStatus(true);
-      const response = await axios.post(
-        `${import.meta.env.VITE_SERVER_ENDPOINT}/products`,
+      const response = await api.post(
+        "/products",
         formPayload,
         {
           headers: {

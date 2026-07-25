@@ -12,7 +12,7 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../api/axiosInstance";
 import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
 
@@ -30,16 +30,13 @@ const MyPost = () => {
     const fetchData = async () => {
       setLoadingStatus(true);
       try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_SERVER_ENDPOINT}/posts`,
-          {
-            headers: {
-              Authorization: `Bearer ${Cookies.get(
-                import.meta.env.VITE_TOKEN_KEY
-              )}`,
-            },
-          }
-        );
+        const response = await api.get("/posts", {
+          headers: {
+            Authorization: `Bearer ${Cookies.get(
+              import.meta.env.VITE_TOKEN_KEY
+            )}`,
+          },
+        });
         if (response.data.status) {
           setData(response.data.posts);
         } else {
@@ -75,16 +72,13 @@ const MyPost = () => {
   const handleDelete = async (postId) => {
     try {
       setLoadingStatus(true);
-      const response = await axios.delete(
-        `${import.meta.env.VITE_SERVER_ENDPOINT}/posts/${postId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${Cookies.get(
-              import.meta.env.VITE_TOKEN_KEY
-            )}`,
-          },
-        }
-      );
+      const response = await api.delete(`/posts/${postId}`, {
+        headers: {
+          Authorization: `Bearer ${Cookies.get(
+            import.meta.env.VITE_TOKEN_KEY
+          )}`,
+        },
+      });
       if (response.data.status) {
         setData(data.filter((item) => item._id !== postId));
         setAlertBoxOpenStatus(true);
@@ -112,8 +106,8 @@ const MyPost = () => {
   const handleVisibility =async(postId)=>{
     try {
       setLoadingStatus(true);
-      const response = await axios.patch(
-        `${import.meta.env.VITE_SERVER_ENDPOINT}/posts/change-visibility/${postId}`,
+      const response = await api.patch(
+        `/posts/change-visibility/${postId}`,
         {},
         {
           headers: {

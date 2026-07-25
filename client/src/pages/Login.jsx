@@ -16,7 +16,7 @@ import GoogleIcon from "@mui/icons-material/Google";
 import { useForm, Controller } from "react-hook-form";
 import Cookies from "js-cookie";
 import { useEffect } from "react";
-import axios from "axios";
+import api from "../api/axiosInstance";
 import useNexora from "../hooks/useNexora";
 import AlertBox from "../../components/common/AlertBox";
 import * as yup from "yup";
@@ -53,10 +53,7 @@ const Login = () => {
   // form submit
   const onSubmit = async (data) => {
     try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_SERVER_ENDPOINT}/users/login`,
-        data
-      );
+      const response = await api.post("/users/login", data);
       if (response.data.status) {
         // Store token and role in cookies
         Cookies.set(import.meta.env.VITE_TOKEN_KEY, response.data.token, {

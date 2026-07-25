@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../../src/api/axiosInstance";
 import Cookies from "js-cookie";
 import {
   Pie,
@@ -28,16 +28,13 @@ const RoleCount = () => {
     const fetchData = async () => {
       try {
         setLoadingStatus(true);
-        const response = await axios.get(
-          `${import.meta.env.VITE_SERVER_ENDPOINT}/admin/users/role-count`,
-          {
-            headers: {
-              Authorization: `Bearer ${Cookies.get(
-                import.meta.env.VITE_TOKEN_KEY
-              )}`,
-            },
-          }
-        );
+        const response = await api.get("/admin/users/role-count", {
+          headers: {
+            Authorization: `Bearer ${Cookies.get(
+              import.meta.env.VITE_TOKEN_KEY
+            )}`,
+          },
+        });
         if (response.data.status) {
           setCountData(response.data.roleCounts);
         } else {

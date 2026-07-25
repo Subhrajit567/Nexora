@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import useNexora from "../hooks/useNexora";
-import axios from "axios";
+import api from "../api/axiosInstance";
 import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
 import { Delete, Edit } from "@mui/icons-material";
@@ -27,16 +27,13 @@ const MyProduct = () => {
     const fetchData = async () => {
       setLoadingStatus(true);
       try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_SERVER_ENDPOINT}/products`,
-          {
-            headers: {
-              Authorization: `Bearer ${Cookies.get(
-                import.meta.env.VITE_TOKEN_KEY
-              )}`,
-            },
-          }
-        );
+        const response = await api.get("/products", {
+          headers: {
+            Authorization: `Bearer ${Cookies.get(
+              import.meta.env.VITE_TOKEN_KEY
+            )}`,
+          },
+        });
         if (response.data.status) {
           setData(response.data.products);
         } else {
@@ -71,16 +68,13 @@ const MyProduct = () => {
   const handleRemove = async (productId) => {
     try {
       setLoadingStatus(true);
-      const response = await axios.delete(
-        `${import.meta.env.VITE_SERVER_ENDPOINT}/products/${productId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${Cookies.get(
-              import.meta.env.VITE_TOKEN_KEY
-            )}`,
-          },
-        }
-      );
+      const response = await api.delete(`/products/${productId}`, {
+        headers: {
+          Authorization: `Bearer ${Cookies.get(
+            import.meta.env.VITE_TOKEN_KEY
+          )}`,
+        },
+      });
       if (response.data.status) {
         setData(data.filter((item) => item._id !== productId));
         setAlertBoxOpenStatus(true);

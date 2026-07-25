@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import useNexora from "../hooks/useNexora";
-import axios from "axios";
+import api from "../api/axiosInstance";
 import {
   Container,
   Card,
@@ -27,9 +27,7 @@ const Product = () => {
     const fetchData = async () => {
       setLoadingStatus(true);
       try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_SERVER_ENDPOINT}/products/${productId}`
-        );
+        const response = await api.get(`/products/${productId}`);
         if (response.data.status) {
           setProduct(response.data.product);
         } else {

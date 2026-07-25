@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
-const API = import.meta.env.VITE_SERVER_ENDPOINT;
+import api from '../api/axiosInstance';
+
 import {
   Box,
   Grid,
@@ -94,12 +94,12 @@ const Analytics = () => {
         setLoading(true);
         const query = getFilterDates();
         const [overviewRes, statusRes, monthlyRes, priorityRes, leaderboardRes, timelineRes] = await Promise.all([
-          axios.get(`${API}/api/analytics/overview${query}`),
-          axios.get(`${API}/api/analytics/status${query}`),
-          axios.get(`${API}/api/analytics/monthly${query}`),
-          axios.get(`${API}/api/analytics/priority${query}`),
-          axios.get(`${API}/api/analytics/leaderboard${query}`),
-          axios.get(`${API}/api/analytics/timeline${query}`)
+          api.get(`/analytics/overview${query}`),
+          api.get(`/analytics/status${query}`),
+          api.get(`/analytics/monthly${query}`),
+          api.get(`/analytics/priority${query}`),
+          api.get(`/analytics/leaderboard${query}`),
+          api.get(`/analytics/timeline${query}`)
         ]);
 
         setOverview(overviewRes.data.data);
